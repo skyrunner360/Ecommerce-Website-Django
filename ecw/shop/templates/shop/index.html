@@ -22,6 +22,13 @@
       body .carousel-control-next-icon{
       background-color: blue;
       }
+
+      .carousel-control-prev,
+      .carousel-control-next{
+      top:auto;
+        bottom: auto;
+      }
+
       body .no-padding{
       padding-left: 0;
       padding-right: 0;
@@ -32,16 +39,18 @@
   {% load static %}
 
   <div class="container">
-  <div id="demo" class="carousel slide my-3" data-ride="carousel">
+        <!--Slideshow Starts Here-->
+        {% for product, range, nSlides in allProds %}
+      <h1>Computers</h1>
+  <div id="demo{{forloop.counter}}" class="carousel slide my-3" data-ride="carousel">
   <ul class="carousel-indicators">
-    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
 
       {% for i in range %}
-    <li data-target="#demo" data-slide-to="{{i}}"></li>
+    <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
       {% endfor %}
   </ul>
 
-  <!--Slideshow Starts Here-->
 <div class="container carousel-inner no-padding">
 
   <div class="carousel-item active">
@@ -75,11 +84,12 @@
         </div>
 </div>
 <!--Left and Right controls for the slide-->
-  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+  <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
     <span class="carousel-control-prev-icon"></span>
   </a>
- <a class="carousel-control-next" href="#demo" data-slide="next">
+ <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
     <span class="carousel-control-next-icon"></span>
   </a>
+      {% endfor %}
+      </div>
 {% endblock %}
-  </div>
