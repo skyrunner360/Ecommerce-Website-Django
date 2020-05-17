@@ -1,4 +1,24 @@
 {% extends 'shop/basic.html' %}
 
 {% block title %}Contact Us {% endblock %}
-  {% block body %}This is a Our Contact Page{% endblock %}
+  {% block body %}
+<div class="container my-3">
+  <h1>Contact Our Team</h1>
+<form action="/shop/contact/" method="post">{% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your Email ID">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label>Message</label>
+    <textarea class="form-control" name="msg" id="exampleFormControlTextarea1" placeholder="Your Message Here"></textarea>
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Subscribe for Newsletters</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+{% endblock %}
