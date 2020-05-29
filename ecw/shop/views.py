@@ -40,4 +40,4 @@ def productview(request,myid):
 
     return render(request,'shop/prodview.html',{'product':product[0]})
 def checkout(request):
-    return HttpResponse("We are at checkout")
+    return render(request,'shop/checkout.html') 
