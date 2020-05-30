@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product, Contact
+from .models import Product, Contact, Orders
 from math import ceil
 # Create your views here.
 def index(request):
@@ -29,6 +29,8 @@ def contact(request):
         msg =request.POST.get('msg','')
         contact = Contact(c_email=email, c_msg=msg)
         contact.save()
+        submit = True
+        return render(request,'shop/contact.html',{'submit':submit})
     return render(request,'shop/contact.html')
 def tracker(request):
     return render(request,'shop/tracker.html')
@@ -40,4 +42,19 @@ def productview(request,myid):
 
     return render(request,'shop/prodview.html',{'product':product[0]})
 def checkout(request):
+    if request.method =="POST":
+        print(request)
+        name = request.POST.get('name','')
+        items_json = request.POST.get('itemsjson','')
+        email= request.POST.get('email','')
+        address= request.POST.get('address1','') + " " +request.POST.get('address2','')
+        city= request.POST.get('city','')
+        state= request.POST.get('state','')
+        zip_code= request.POST.get('zip','')
+        phone = request.POST.get('phone','')
+        checkout = Orders(items_json=items_json,name=name,email=email,address=address,city=city,state=state,zip_code=zip_code,phone=phone)
+        checkout.save()
+        thank = True
+        id=checkout.order_id
+        return render(request,'shop/checkout.html',{'thank':thank,'id':id})
     return render(request,'shop/checkout.html') 

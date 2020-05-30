@@ -22,3 +22,11 @@
 </form>
 </div>
 {% endblock %}
+{% block js %}
+<script>
+{% if submit %}
+alert('Thank You For Contacting us');
+document.location="/shop";
+{% endif %}
+</script>
+{% endblock %}
