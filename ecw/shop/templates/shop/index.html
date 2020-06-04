@@ -55,9 +55,9 @@ padding-right: 0;
                             <img src='/media/{{i.image}}' class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
-                                <p class="card-text">{{i.desc|slice:"0:53"}}...</p>
+                                <p class="card-text">{{i.desc|slice:"0:53"}}...<br class="mx-1"> Rs. <span class="badge badge-info mx-1" id="pricepr{{i.id}}">{{i.price}}</span></p>
                                 <span id="divpr{{i.id}}" class="divpr">
-                                    <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
+                                    <button id="pr{{i.id}}" class="btn btn-success cart">Add To Cart</button>
                                 </span>
                                 <a href="/shop/products/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart">QuickView</button></a>
                             </div>
@@ -100,7 +100,8 @@ if (localStorage.getItem('cart') == null) {
     } else {
         qty = 1;
         cartname =  document.getElementById('name'+idstr).innerHTML;
-        cart[idstr] = [qty,cartname];
+        price =  document.getElementById('price'+idstr).innerHTML;
+        cart[idstr] = [qty,cartname,parseInt(price)];
     }
     updateCart(cart);
 });
@@ -117,7 +118,7 @@ function updatePopover(cart) {
         popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
         i = i + 1;
     }
-    popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+    popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>"
     console.log(popStr);
     document.getElementById('popcart').setAttribute('data-content', popStr);
     $('#popcart').popover('show');
@@ -125,7 +126,7 @@ function updatePopover(cart) {
 function clearCart() {
     cart = JSON.parse(localStorage.getItem('cart'));
     for (var item in cart) {
-        document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cart">Add To Cart</button>'
+        document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-success cart">Add To Cart</button>'
     }
     localStorage.clear();
     cart = {};
@@ -135,7 +136,7 @@ function updateCart(cart) {
     var sum = 0;
     for (var item in cart) {
         sum = sum + cart[item][0];
-        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-danger minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-success plus'> + </button>";
     }
     localStorage.setItem('cart', JSON.stringify(cart));
     document.getElementById('cart').innerHTML = sum;

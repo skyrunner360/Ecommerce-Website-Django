@@ -56,7 +56,7 @@ ROOT_URLCONF = 'ecw.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['ecw/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

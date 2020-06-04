@@ -1,15 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product, Contact, Orders
+from .models import Product, Contact, Orders, OrderUpdate
 from math import ceil
+import json
 # Create your views here.
 def index(request):
-    # products = Product.objects.all()
-    # n= len(products)
-    # nSlides = n//4 + ceil((n/4) - (n//4))
-    # params = {'no_of_slides': nSlides,'range': range(1,nSlides),'product': products}
-    # allprods = [[products,range(1, nSlides), nSlides],
-    #             [products,range(1, nSlides), nSlides]]
     allprods = []
     catprods = Product.objects.values('category','id')
     cats = {item ['category'] for item in catprods}
@@ -33,13 +28,28 @@ def contact(request):
         return render(request,'shop/contact.html',{'submit':submit})
     return render(request,'shop/contact.html')
 def tracker(request):
+    if request.method=="POST":
+        OrderId = request.POST.get("orderId", '')
+        email = request.POST.get('email', '')
+        try:
+            order = Orders.objects.filter(order_id=OrderId, email=email)
+            if len(order)>0:
+                Update = OrderUpdate.objects.filter(order_id=OrderId)
+                updates = []
+                for item in Update:
+                    updates.append({'text':item.update_desc,'time':item.timestamp})
+                    response = json.dumps([updates,order[0].items_json],default=str)
+                return HttpResponse(response)
+            else:
+                return HttpResponse('{}')
+        except Exception as e:
+            return HttpResponse('{}')
     return render(request,'shop/tracker.html')
 def search(request):
     return render(request,'shop/search.html')
 def productview(request,myid):
     #Fetch the product using id
     product = Product.objects.filter(id=myid)
-
     return render(request,'shop/prodview.html',{'product':product[0]})
 def checkout(request):
     if request.method =="POST":
@@ -54,6 +64,8 @@ def checkout(request):
         phone = request.POST.get('phone','')
         checkout = Orders(items_json=items_json,name=name,email=email,address=address,city=city,state=state,zip_code=zip_code,phone=phone)
         checkout.save()
+        update = OrderUpdate(order_id=checkout.order_id,update_desc="The Order Has Been Placed")
+        update.save()
         thank = True
         id=checkout.order_id
         return render(request,'shop/checkout.html',{'thank':thank,'id':id})

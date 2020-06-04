@@ -6,6 +6,13 @@
       <ul class="list-group" id="items">
       <!-- Items display here from javascript -->
       </ul>
+      <nav aria-label="breadcrumb">
+  <ol class="breadcrumb mt-3">
+    <li class="breadcrumb-item active" aria-current="page">Your Cart Total is <b>Rs. <span id="totalPrice"></span></b>
+    <i>Enter Your Details below and place your order.</i> Thanks for using Tech Heaven.
+    </li>
+  </ol>
+</nav>
     </div>
   </div>
   <div class="col my-4">
@@ -62,6 +69,7 @@ if (localStorage.getItem('cart') == null) {
     cart = JSON.parse(localStorage.getItem('cart'));
 }
 var sum=0;
+var totalPrice=0;
 if ($.isEmptyObject(cart)){
   mystr = `<p>Your Cart is Empty Please Add some items before checking out</p>`
           $('#items').append(mystr);
@@ -71,15 +79,19 @@ else{
   for (item in cart){
     let name = cart[item][1];
     let qty = cart[item][0];
+    let itemprice = cart[item][2];
     sum = sum  + qty;
+    totalPrice = totalPrice+qty*itemprice;
     mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
             ${name}
               <span class="badge badge-primary badge-pill">${qty}</span>
             </li>`
           $('#items').append(mystr);
       }
+
 }
 document.getElementById('cart').innerHTML = sum;
+document.getElementById('totalPrice').innerHTML = totalPrice;
 $('#itemsjson').val(JSON.stringify(cart));
 {% if thank %}
 alert('Thanks For Ordering with us. Your Order ID is {{id}}. Use it to track your order')
