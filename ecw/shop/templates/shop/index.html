@@ -16,7 +16,10 @@ body .carousel-indicator li{
 background-color: blue;
 }
 body .carousel-indicators{
-bottom: 0;
+bottom: -40px;
+}
+.carousel-indicator li{
+background-color: #7270fc;
 }
 body .carousel-control-prev-icon,
 body .carousel-control-next-icon{
@@ -148,7 +151,13 @@ $('.divpr').on("click", "button.minus", function() {
     a = this.id.slice(7, );
     cart['pr' + a][0] = cart['pr' + a][0] - 1;
     cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
-    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    if (cart['pr'+a][0]==0){
+        document.getElementById('divpr'+a).innerHTML = '<button id="pr'+a+'" class="btn btn-success cart">Add To Cart</button>'
+        delete cart['pr'+a];
+    }
+    else{
+         document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    }
     updateCart(cart);
 });
 $('.divpr').on("click", "button.plus", function() {
