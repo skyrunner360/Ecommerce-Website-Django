@@ -9,4 +9,4 @@ __Note - `This Only Runs in Django Venv`__
 - Cart Management
 - Checkout Page
 - Order Tracker
-- Payment Integration
+- Payment Integration (Will only work with a valid paytm Merchant ID)
