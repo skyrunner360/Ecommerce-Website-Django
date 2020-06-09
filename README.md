@@ -10,3 +10,4 @@ __Note - `This Only Runs in Django Venv`__
 - Checkout Page
 - Order Tracker
 - Payment Integration (_Will only work with a valid paytm Merchant ID_)
+- Search Functionality
