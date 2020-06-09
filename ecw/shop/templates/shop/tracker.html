@@ -49,10 +49,11 @@ $.ajax({
   encode: true
   })
   .done(function(data){
+    $('#citems').empty();
     console.log(data)
     data = JSON.parse(data);
-    updates = data[0];
-if (updates.length > 0 & updates != {}){
+if (data['status']== 'success'){
+  updates = data['updates'];
       for (i=0; i < updates.length; i++){
         let text = updates[i]['text'];
         let time = updates[i]['time'];
@@ -61,14 +62,9 @@ if (updates.length > 0 & updates != {}){
                 <span class="badge badge-primary badge-pill">${time}</span>
               </li>`
             $('#items').append(mystr);
-    }}
-else {
-     mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
-            Sorry, we are not being able to fetch this order. Make sure to type the correct order ID and Email.</li>`
-    $('#items').append(mystr);
-  }
-  //Fill in the order details
- cart = JSON.parse(data[1]);
+    }
+    //Fill in the order details
+ cart = JSON.parse(data['itemsJson']);
  console.log(cart);
  for (item in cart){
     let name = cart[item][1];
@@ -79,6 +75,13 @@ else {
             </li>`
           $('#citems').append(mystr);
       }
+    }
+else {
+     mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+            Sorry, we are not being able to fetch this order. Make sure to type the correct order ID and Email.</li>`
+    $('#items').append(mystr);
+    $('#citems').append(mystr);
+  }
   });
   event.preventDefault();
 });

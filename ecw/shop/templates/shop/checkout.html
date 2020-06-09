@@ -20,6 +20,7 @@
     <form method="post" action="/shop/checkout/">
       {% csrf_token %}
       <input type="hidden" name = "itemsjson" id="itemsjson">
+      <input type="hidden" name = "amount" id="amount">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputname">Name</label>
@@ -98,5 +99,6 @@ alert('Thanks For Ordering with us. Your Order ID is {{id}}. Use it to track you
 localStorage.clear();
 document.location="/shop";
 {% endif %}
+$('#amount').val($('#totalPrice').html())
 </script>
 {% endblock %}
