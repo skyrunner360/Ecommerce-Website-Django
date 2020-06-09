@@ -11,3 +11,5 @@ __Note - `This Only Runs in Django Venv`__
 - Order Tracker
 - Payment Integration (_Will only work with a valid_ __Paytm Merchant ID__)
 - Search Functionality
+
+Credits- [CodeWithHarry](https://www.youtube.com/channel/UCeVMnSShP_Iviwkknt83cww)
