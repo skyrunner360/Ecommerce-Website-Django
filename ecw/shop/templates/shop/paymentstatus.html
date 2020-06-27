@@ -1,0 +1,14 @@
+{% extends 'shop/basic.html' %} {% block title %}Tracker - Tech heaven {% endblock %} {% block body %}
+{{response}}
+<h1>Payment status regarding your ID {{response.ORDERID}}</h2>
+{% if response.RESPCODE == '01' %}
+Order Success
+{% else %}
+Order Failed
+{% endif %}
+{% endblock %}
+{% block js %}
+<script>
+
+</script>
+{% endblock %}
