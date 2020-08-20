@@ -1,4 +1,4 @@
-# ecommerce_website_django
+# Ecommerce Website In Django
 E- Commerce Website Created in Django.
 
 ![GitHub followers](https://img.shields.io/github/followers/skyrunner360?label=Follow&style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/skyrunner360?style=social) 
